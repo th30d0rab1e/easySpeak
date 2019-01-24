@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SpeakScott" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="od9-vs-cp9">
+                                <rect key="frame" x="166" y="112" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yza-Op-fLt">
+                                <rect key="frame" x="166" y="535" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k0m-1h-plO">
+                                <rect key="frame" x="87" y="263" width="200" height="141"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="60"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="od9-vs-cp9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8ie-FK-rGe"/>
+                            <constraint firstItem="k0m-1h-plO" firstAttribute="top" secondItem="od9-vs-cp9" secondAttribute="bottom" constant="50" id="Sgb-N9-md8"/>
+                            <constraint firstItem="yza-Op-fLt" firstAttribute="top" secondItem="k0m-1h-plO" secondAttribute="bottom" constant="50" id="Spq-e8-Ney"/>
+                            <constraint firstItem="k0m-1h-plO" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="cd0-5d-v0v"/>
+                            <constraint firstItem="yza-Op-fLt" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="mYO-6G-fSC"/>
+                            <constraint firstItem="k0m-1h-plO" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="xha-GX-ioc"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="DFr-jk-ZiX" appends="YES" id="Nrk-35-GiA"/>
+                            <outletCollection property="gestureRecognizers" destination="Af6-fk-U24" appends="YES" id="Bde-zB-WUQ"/>
+                            <outletCollection property="gestureRecognizers" destination="8on-oL-GsY" appends="YES" id="EJ2-Ie-JUT"/>
+                            <outletCollection property="gestureRecognizers" destination="AvF-4h-3b7" appends="YES" id="neH-bF-yxp"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <outlet property="swipeLabel" destination="od9-vs-cp9" id="Bym-Ul-TnL"/>
+                        <outlet property="theLabel" destination="k0m-1h-plO" id="1uA-XS-pbn"/>
+                        <outlet property="wordLabel" destination="yza-Op-fLt" id="Fcx-Iu-oOi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="right" id="DFr-jk-ZiX">
+                    <connections>
+                        <action selector="SwipeRight:" destination="BYZ-38-t0r" id="JEf-OA-EBr"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="left" id="Af6-fk-U24">
+                    <connections>
+                        <action selector="swipeLeft:" destination="BYZ-38-t0r" id="eMv-By-eww"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="up" id="8on-oL-GsY">
+                    <connections>
+                        <action selector="swipeUp:" destination="BYZ-38-t0r" id="hr3-TY-ObZ"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="down" id="AvF-4h-3b7">
+                    <connections>
+                        <action selector="SwipeDown:" destination="BYZ-38-t0r" id="dpW-Ga-QrF"/>
+                    </connections>
+                </swipeGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="61.600000000000001" y="32.833583208395808"/>
+        </scene>
+    </scenes>
+</document>
