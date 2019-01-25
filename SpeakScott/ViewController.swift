@@ -15,9 +15,30 @@ class ViewController: UIViewController {
     @IBOutlet weak var swipeLabel: UILabel!
     @IBOutlet weak var wordLabel: UILabel!
     
-    var listOfQuestions  : [List] = []
+    var listOfQuestions : [List] = [];
     var index = 0;
     var word:String = "";
+    
+    let screenSize: CGRect = UIScreen.main.bounds
+    var topView : UIView? = nil;
+    var bottomView : UIView? = nil;
+    var rightView : UIView? = nil;
+    var leftView : UIView? = nil;
+    
+//    convenience init() {
+//        self.init(nibName:nil, bundle:nil)
+//    }
+//
+//    // This extends the superclass.
+//    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+//        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+//        //tap = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
+//    }
+//
+//    // This is also necessary when extending the superclass.
+//    required init?(coder aDecoder: NSCoder) {
+//        //fatalError("init(coder:) has not been implemented") // or see Roman Sausarnes's answer
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,39 +64,45 @@ class ViewController: UIViewController {
     
     
     func addViews(){
-        let screenSize: CGRect = UIScreen.main.bounds
         //top
-        let topView = UIView(frame: CGRect(x: screenSize.width * 0.20, y: 0, width: screenSize.width * 0.60, height: screenSize.height * 0.50))
-        self.view.addSubview(topView)
-        topView.backgroundColor = UIColor.blue.withAlphaComponent(0.10);
-        let tapGestureTop = UITapGestureRecognizer(target: self, action: #selector(handleTapTop(sender:)))
-        topView.addGestureRecognizer(tapGestureTop);
+        topView = UIView(frame: CGRect(x: screenSize.width * 0.20, y: 0, width: screenSize.width * 0.60, height: screenSize.height * 0.50))
+        if var tv = topView {
+            self.view.addSubview(tv)
+            tv.backgroundColor = UIColor.blue.withAlphaComponent(0.10);
+            let tapGestureTop = UITapGestureRecognizer(target: self, action: #selector(handleTapTop(sender:)))
+            tv.addGestureRecognizer(tapGestureTop);
+        }
         
         //bottom
-        let bottomView = UIView(frame: CGRect(x: screenSize.width * 0.20, y: screenSize.height * 0.50, width: screenSize.width * 0.60, height: screenSize.height * 0.50))
-        self.view.addSubview(bottomView)
-        bottomView.backgroundColor = UIColor.green.withAlphaComponent(0.10);
-        let tapGestureBottom = UITapGestureRecognizer(target: self, action: #selector(handleTapBottom(sender:)))
-        bottomView.addGestureRecognizer(tapGestureBottom);
+        bottomView = UIView(frame: CGRect(x: screenSize.width * 0.20, y: screenSize.height * 0.50, width: screenSize.width * 0.60, height: screenSize.height * 0.50))
+        if var bv = bottomView {
+            self.view.addSubview(bv)
+            bv.backgroundColor = UIColor.green.withAlphaComponent(0.10);
+            let tapGestureBottom = UITapGestureRecognizer(target: self, action: #selector(handleTapBottom(sender:)))
+            bv.addGestureRecognizer(tapGestureBottom);
+        }
         
         //right
-        let rightView = UIView(frame: CGRect(x: screenSize.width * 0.80, y: 0, width: screenSize.width * 0.20, height: screenSize.height))
-        self.view.addSubview(rightView)
-        rightView.backgroundColor = UIColor.red.withAlphaComponent(0.10);
-        let tapGestureRight = UITapGestureRecognizer(target: self, action: #selector(handleTapRight(sender:)))
-        rightView.addGestureRecognizer(tapGestureRight);
+        rightView = UIView(frame: CGRect(x: screenSize.width * 0.80, y: 0, width: screenSize.width * 0.20, height: screenSize.height))
+        if var rv = rightView {
+            self.view.addSubview(rv)
+            rv.backgroundColor = UIColor.red.withAlphaComponent(0.10);
+            let tapGestureRight = UITapGestureRecognizer(target: self, action: #selector(handleTapRight(sender:)))
+            rv.addGestureRecognizer(tapGestureRight);
+        }
         
         //left
-        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width * 0.20, height: screenSize.height))
-        self.view.addSubview(leftView)
-        leftView.backgroundColor = UIColor.red.withAlphaComponent(0.10);
-        let tapGestureLeft = UITapGestureRecognizer(target: self, action: #selector(handleTapLeft(sender:)))
-        leftView.addGestureRecognizer(tapGestureLeft);
+        leftView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width * 0.20, height: screenSize.height))
+        if var lv = leftView {
+            self.view.addSubview(lv)
+            lv.backgroundColor = UIColor.red.withAlphaComponent(0.10);
+            let tapGestureLeft = UITapGestureRecognizer(target: self, action: #selector(handleTapLeft(sender:)))
+            lv.addGestureRecognizer(tapGestureLeft);
+        }
     }
 
     //top
     @objc func handleTapTop(sender: UITapGestureRecognizer) {
-        print("tap top")
         swipeLabel.text = "Tapped Top"
         
         //Letter Added to Word
@@ -101,7 +128,6 @@ class ViewController: UIViewController {
     
     //bottom
     @objc func handleTapBottom(sender: UITapGestureRecognizer) {
-        print("tap bottom")
         swipeLabel.text = "Tapped Bottom"
         
         //Letter Added to Word
@@ -128,31 +154,21 @@ class ViewController: UIViewController {
     
     //left
     @objc func handleTapLeft(sender: UITapGestureRecognizer) {
-        print("tap left")
         swipeLabel.text = "Tapped Left"
         index = index - 1;
-        
-        print("Index is currently ", index)
-        print("Count of array is ", listOfQuestions.count)
         
         if (index == -1){
             index = listOfQuestions.count - 1
         }
-        
         speakNext(entity: index)
     }
     
     //right
     @objc func handleTapRight(sender: UITapGestureRecognizer) {
-        print("tap right")
         swipeLabel.text = "Tapped Right"
         index = index + 1;
         
-        print("Index is currently ", index)
-        print("Count of array is ", listOfQuestions.count)
-        
         if (index == listOfQuestions.count){
-            print("k im gonna fix it?")
             index = 0
         }
         speakNext(entity: index)
@@ -168,24 +184,13 @@ class ViewController: UIViewController {
         theLabel.text = string
     }
     
-    //handle phone rotatte
+    //handle phone rotate
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        let screenSize: CGRect = UIScreen.main.bounds;
-        //top
-        let topView = UIView(frame: CGRect(x: screenSize.width * 0.20, y: 0, width: screenSize.width * 0.60, height: screenSize.height * 0.50))
-        //bottom
-        let bottomView = UIView(frame: CGRect(x: screenSize.width * 0.20, y: screenSize.height * 0.50, width: screenSize.width * 0.60, height: screenSize.height * 0.50))
-        //right
-        let rightView = UIView(frame: CGRect(x: screenSize.width * 0.80, y: 0, width: screenSize.width * 0.20, height: screenSize.height))
-        //left
-        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width * 0.20, height: screenSize.height))
-        
-        if UIDevice.current.orientation.isLandscape {
-            print("Landscape")
-        } else {
-            print("Portrait")
-        }
+        topView = UIView(frame: CGRect(x: screenSize.width * 0.20, y: 0, width: screenSize.width * 0.60, height: screenSize.height * 0.50))
+        bottomView = UIView(frame: CGRect(x: screenSize.width * 0.20, y: screenSize.height * 0.50, width: screenSize.width * 0.60, height: screenSize.height * 0.50))
+        rightView = UIView(frame: CGRect(x: screenSize.width * 0.80, y: 0, width: screenSize.width * 0.20, height: screenSize.height))
+        leftView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width * 0.20, height: screenSize.height))
     }
     
     //Swiped Right
@@ -193,11 +198,7 @@ class ViewController: UIViewController {
         swipeLabel.text = "Swiped Right"
         index = index + 1;
         
-        print("Index is currently ", index)
-        print("Count of array is ", listOfQuestions.count)
-        
         if (index == listOfQuestions.count){
-            print("k im gonna fix it?")
             index = 0
         }
         speakNext(entity: index)
@@ -208,11 +209,7 @@ class ViewController: UIViewController {
         swipeLabel.text = "Swiped Left"
         index = index - 1;
         
-        print("Index is currently ", index)
-        print("Count of array is ", listOfQuestions.count)
-        
         if (index == -1){
-            print("k im gonna fix it?")
             index = listOfQuestions.count - 1
         }
         
@@ -224,9 +221,6 @@ class ViewController: UIViewController {
         let string:String! = listOfQuestions[index].approval
         let utterance = AVSpeechUtterance(string: string!)
         
-        print(index)
-        print(string)
-        
         utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
         let synth = AVSpeechSynthesizer()
         synth.speak(utterance)
@@ -235,7 +229,7 @@ class ViewController: UIViewController {
         if (listOfQuestions[index].type == 1)
         {
             word += listOfQuestions[index].question
-            print("Word is", word)
+            wordLabel.text = word;
         }
         
     }
@@ -245,9 +239,6 @@ class ViewController: UIViewController {
         let string:String! = listOfQuestions[index].rejection
         let utterance = AVSpeechUtterance(string: string)
         
-        print(index)
-        print(string)
-        
         utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
         let synth = AVSpeechSynthesizer()
         synth.speak(utterance)
@@ -255,8 +246,8 @@ class ViewController: UIViewController {
         //Letter Added to Word
         if (listOfQuestions[index].type == 1)
         {
-            word = String(word.characters.dropLast())
-            print("Word is", word)
+            word = String(word.characters.dropLast());
+            wordLabel.text = word;
         }
     }
     
