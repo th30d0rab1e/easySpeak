@@ -25,21 +25,6 @@ class ViewController: UIViewController {
     var rightView : UIView? = nil;
     var leftView : UIView? = nil;
     
-//    convenience init() {
-//        self.init(nibName:nil, bundle:nil)
-//    }
-//
-//    // This extends the superclass.
-//    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-//        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-//        //tap = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
-//    }
-//
-//    // This is also necessary when extending the superclass.
-//    required init?(coder aDecoder: NSCoder) {
-//        //fatalError("init(coder:) has not been implemented") // or see Roman Sausarnes's answer
-//    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.becomeFirstResponder() // To get shake gesture
@@ -62,11 +47,20 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
     func addViews(){
+        
+        //left
+        if let lv = leftView {
+            lv.anchor(top: view.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: topView?.leadingAnchor, size: .init(width: screenSize.width * 0.20, height: screenSize.height))
+            self.view.addSubview(lv)
+            lv.backgroundColor = UIColor.red.withAlphaComponent(0.10);
+            let tapGestureLeft = UITapGestureRecognizer(target: self, action: #selector(handleTapLeft(sender:)))
+            lv.addGestureRecognizer(tapGestureLeft);
+        }
         //top
-        topView = UIView(frame: CGRect(x: screenSize.width * 0.20, y: 0, width: screenSize.width * 0.60, height: screenSize.height * 0.50))
-        if var tv = topView {
+//        topView = UIView(frame: CGRect(x: screenSize.width * 0.20, y: 0, width: screenSize.width * 0.60, height: screenSize.height * 0.50))
+        if let tv = topView {
+            tv.anchor(top: view.topAnchor, bottom: bottomView?.topAnchor, leading: leftView?.leadingAnchor, trailing: rightView?.leadingAnchor, size: .init(width: screenSize.width * 0.60, height: screenSize.height * 0.50))
             self.view.addSubview(tv)
             tv.backgroundColor = UIColor.blue.withAlphaComponent(0.10);
             let tapGestureTop = UITapGestureRecognizer(target: self, action: #selector(handleTapTop(sender:)))
@@ -74,8 +68,9 @@ class ViewController: UIViewController {
         }
         
         //bottom
-        bottomView = UIView(frame: CGRect(x: screenSize.width * 0.20, y: screenSize.height * 0.50, width: screenSize.width * 0.60, height: screenSize.height * 0.50))
-        if var bv = bottomView {
+//        bottomView = UIView(frame: CGRect(x: screenSize.width * 0.20, y: screenSize.height * 0.50, width: screenSize.width * 0.60, height: screenSize.height * 0.50))
+        if let bv = bottomView {
+            bv.anchor(top: topView?.bottomAnchor, bottom: view.bottomAnchor, leading: leftView?.trailingAnchor, trailing: rightView?.leadingAnchor, size: .init(width: screenSize.width * 0.60, height: screenSize.height * 0.50))
             self.view.addSubview(bv)
             bv.backgroundColor = UIColor.green.withAlphaComponent(0.10);
             let tapGestureBottom = UITapGestureRecognizer(target: self, action: #selector(handleTapBottom(sender:)))
@@ -83,22 +78,16 @@ class ViewController: UIViewController {
         }
         
         //right
-        rightView = UIView(frame: CGRect(x: screenSize.width * 0.80, y: 0, width: screenSize.width * 0.20, height: screenSize.height))
-        if var rv = rightView {
+        //rightView = UIView(frame: CGRect(x: screenSize.width * 0.80, y: 0, width: screenSize.width * 0.20, height: screenSize.height))
+        if let rv = rightView {
+            rv.anchor(top: view.topAnchor, bottom: view.bottomAnchor, leading: bottomView?.trailingAnchor, trailing: view.trailingAnchor, size: .init(width: screenSize.width * 0.20, height: screenSize.height))
             self.view.addSubview(rv)
             rv.backgroundColor = UIColor.red.withAlphaComponent(0.10);
             let tapGestureRight = UITapGestureRecognizer(target: self, action: #selector(handleTapRight(sender:)))
             rv.addGestureRecognizer(tapGestureRight);
         }
         
-        //left
-        leftView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width * 0.20, height: screenSize.height))
-        if var lv = leftView {
-            self.view.addSubview(lv)
-            lv.backgroundColor = UIColor.red.withAlphaComponent(0.10);
-            let tapGestureLeft = UITapGestureRecognizer(target: self, action: #selector(handleTapLeft(sender:)))
-            lv.addGestureRecognizer(tapGestureLeft);
-        }
+        
     }
 
     //top
@@ -131,8 +120,7 @@ class ViewController: UIViewController {
         swipeLabel.text = "Tapped Bottom"
         
         //Letter Added to Word
-        if (listOfQuestions[index].type == 1)
-        {
+        if (listOfQuestions[index].type == 1) {
             word = String(word.characters.dropLast());
             wordLabel.text = word;
             if(word != "") {
@@ -182,15 +170,6 @@ class ViewController: UIViewController {
         synth.speak(utterance)
         
         theLabel.text = string
-    }
-    
-    //handle phone rotate
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        topView = UIView(frame: CGRect(x: screenSize.width * 0.20, y: 0, width: screenSize.width * 0.60, height: screenSize.height * 0.50))
-        bottomView = UIView(frame: CGRect(x: screenSize.width * 0.20, y: screenSize.height * 0.50, width: screenSize.width * 0.60, height: screenSize.height * 0.50))
-        rightView = UIView(frame: CGRect(x: screenSize.width * 0.80, y: 0, width: screenSize.width * 0.20, height: screenSize.height))
-        leftView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width * 0.20, height: screenSize.height))
     }
     
     //Swiped Right
@@ -446,3 +425,28 @@ class ViewController: UIViewController {
     }
 }
 
+extension UIView {
+    func anchor(top: NSLayoutYAxisAnchor?, bottom: NSLayoutYAxisAnchor?, leading: NSLayoutXAxisAnchor?, trailing: NSLayoutXAxisAnchor?, padding: UIEdgeInsets = .zero, size: CGSize = .zero){
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        if let top = top {
+            topAnchor.constraint(equalTo: top, constant: padding.top).isActive = true
+        }
+        if let bottom = bottom {
+            bottomAnchor.constraint(equalTo: bottom, constant: padding.bottom * -1).isActive = true
+        }
+        if let leading = leading {
+            leadingAnchor.constraint(equalTo: leading, constant: padding.left).isActive = true
+        }
+        if let trailing = trailing {
+            rightAnchor.constraint(equalTo: trailing, constant:  padding.right * -1).isActive = true
+        }
+        
+        if size.width != 0 {
+            widthAnchor.constraint(equalToConstant: size.width).isActive = true
+        }
+        if size.height != 0 {
+            heightAnchor.constraint(equalToConstant: size.height).isActive  = true
+        }
+    }
+}
