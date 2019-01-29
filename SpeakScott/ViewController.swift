@@ -30,6 +30,7 @@ class ViewController: UIViewController {
         self.becomeFirstResponder() // To get shake gesture
         
         addViews();
+        //addViewConstraints();
         addTestData();
         
         theLabel.text = listOfQuestions[index].question
@@ -48,46 +49,49 @@ class ViewController: UIViewController {
     }
     
     func addViews(){
-        
         //left
+        leftView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width * 0.20, height: screenSize.height))
         if let lv = leftView {
-            lv.anchor(top: view.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: topView?.leadingAnchor, size: .init(width: screenSize.width * 0.20, height: screenSize.height))
             self.view.addSubview(lv)
             lv.backgroundColor = UIColor.red.withAlphaComponent(0.10);
             let tapGestureLeft = UITapGestureRecognizer(target: self, action: #selector(handleTapLeft(sender:)))
             lv.addGestureRecognizer(tapGestureLeft);
         }
         //top
-//        topView = UIView(frame: CGRect(x: screenSize.width * 0.20, y: 0, width: screenSize.width * 0.60, height: screenSize.height * 0.50))
+        topView = UIView(frame: CGRect(x: screenSize.width * 0.20, y: 0, width: screenSize.width * 0.60, height: screenSize.height * 0.50))
         if let tv = topView {
-            tv.anchor(top: view.topAnchor, bottom: bottomView?.topAnchor, leading: leftView?.leadingAnchor, trailing: rightView?.leadingAnchor, size: .init(width: screenSize.width * 0.60, height: screenSize.height * 0.50))
             self.view.addSubview(tv)
             tv.backgroundColor = UIColor.blue.withAlphaComponent(0.10);
             let tapGestureTop = UITapGestureRecognizer(target: self, action: #selector(handleTapTop(sender:)))
             tv.addGestureRecognizer(tapGestureTop);
         }
-        
         //bottom
-//        bottomView = UIView(frame: CGRect(x: screenSize.width * 0.20, y: screenSize.height * 0.50, width: screenSize.width * 0.60, height: screenSize.height * 0.50))
+        bottomView = UIView(frame: CGRect(x: screenSize.width * 0.20, y: screenSize.height * 0.50, width: screenSize.width * 0.60, height: screenSize.height * 0.50))
         if let bv = bottomView {
-            bv.anchor(top: topView?.bottomAnchor, bottom: view.bottomAnchor, leading: leftView?.trailingAnchor, trailing: rightView?.leadingAnchor, size: .init(width: screenSize.width * 0.60, height: screenSize.height * 0.50))
             self.view.addSubview(bv)
             bv.backgroundColor = UIColor.green.withAlphaComponent(0.10);
             let tapGestureBottom = UITapGestureRecognizer(target: self, action: #selector(handleTapBottom(sender:)))
             bv.addGestureRecognizer(tapGestureBottom);
         }
-        
         //right
-        //rightView = UIView(frame: CGRect(x: screenSize.width * 0.80, y: 0, width: screenSize.width * 0.20, height: screenSize.height))
+        rightView = UIView(frame: CGRect(x: screenSize.width * 0.80, y: 0, width: screenSize.width * 0.20, height: screenSize.height))
         if let rv = rightView {
-            rv.anchor(top: view.topAnchor, bottom: view.bottomAnchor, leading: bottomView?.trailingAnchor, trailing: view.trailingAnchor, size: .init(width: screenSize.width * 0.20, height: screenSize.height))
             self.view.addSubview(rv)
             rv.backgroundColor = UIColor.red.withAlphaComponent(0.10);
             let tapGestureRight = UITapGestureRecognizer(target: self, action: #selector(handleTapRight(sender:)))
             rv.addGestureRecognizer(tapGestureRight);
         }
-        
-        
+    }
+    
+    func addViewConstraints(){
+        //left
+        leftView?.anchor(top: view.topAnchor, bottom: view.bottomAnchor, leading: view.leftAnchor, trailing: topView?.leftAnchor)
+        //top
+        topView?.anchor(top: view.topAnchor, bottom: bottomView?.topAnchor, leading: leftView?.rightAnchor, trailing: rightView?.leftAnchor)
+        //bottom
+        bottomView?.anchor(top: topView?.bottomAnchor, bottom: view.bottomAnchor, leading: leftView?.rightAnchor, trailing: rightView?.leftAnchor)
+        //right
+        rightView?.anchor(top: view.topAnchor, bottom: view.bottomAnchor, leading: bottomView?.rightAnchor, trailing: view.rightAnchor)
     }
 
     //top
