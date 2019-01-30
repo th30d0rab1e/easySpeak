@@ -29,8 +29,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         self.becomeFirstResponder() // To get shake gesture
         
+        addViewConstraints();
         addViews();
-        //addViewConstraints();
         addTestData();
         
         theLabel.text = listOfQuestions[index].question
@@ -50,7 +50,7 @@ class ViewController: UIViewController {
     
     func addViews(){
         //left
-        leftView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width * 0.20, height: screenSize.height))
+        leftView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width * 0.20, height: screenSize.height));
         if let lv = leftView {
             self.view.addSubview(lv)
             lv.backgroundColor = UIColor.red.withAlphaComponent(0.10);
@@ -58,7 +58,7 @@ class ViewController: UIViewController {
             lv.addGestureRecognizer(tapGestureLeft);
         }
         //top
-        topView = UIView(frame: CGRect(x: screenSize.width * 0.20, y: 0, width: screenSize.width * 0.60, height: screenSize.height * 0.50))
+        topView = UIView(frame: CGRect(x: screenSize.width * 0.20, y: 0, width: screenSize.width * 0.60, height: screenSize.height * 0.50));
         if let tv = topView {
             self.view.addSubview(tv)
             tv.backgroundColor = UIColor.blue.withAlphaComponent(0.10);
@@ -81,17 +81,36 @@ class ViewController: UIViewController {
             let tapGestureRight = UITapGestureRecognizer(target: self, action: #selector(handleTapRight(sender:)))
             rv.addGestureRecognizer(tapGestureRight);
         }
+        
+        
     }
     
     func addViewConstraints(){
-        //left
-        leftView?.anchor(top: view.topAnchor, bottom: view.bottomAnchor, leading: view.leftAnchor, trailing: topView?.leftAnchor)
-        //top
-        topView?.anchor(top: view.topAnchor, bottom: bottomView?.topAnchor, leading: leftView?.rightAnchor, trailing: rightView?.leftAnchor)
-        //bottom
-        bottomView?.anchor(top: topView?.bottomAnchor, bottom: view.bottomAnchor, leading: leftView?.rightAnchor, trailing: rightView?.leftAnchor)
-        //right
-        rightView?.anchor(top: view.topAnchor, bottom: view.bottomAnchor, leading: bottomView?.rightAnchor, trailing: view.rightAnchor)
+        //this will change the SIZE of the views dependant on the orientation of the screen
+            //top
+        topView?.anchor(top: view.topAnchor, bottom: bottomView?.topAnchor, leading: leftView?.trailingAnchor, trailing: rightView?.leadingAnchor);
+        topView?.widthAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.60).isActive = true;
+        topView?.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.50).isActive = true;
+        topView?.translatesAutoresizingMaskIntoConstraints = false;
+        
+            //left
+        leftView?.anchor(top: view.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: topView?.leadingAnchor);
+        leftView?.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.20).isActive = true;
+        leftView?.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true;
+        leftView?.translatesAutoresizingMaskIntoConstraints = false;
+        
+            //right
+        rightView?.anchor(top: view.topAnchor, bottom: view.bottomAnchor , leading: topView?.trailingAnchor, trailing: view.leadingAnchor);
+        rightView?.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.20).isActive = true;
+        rightView?.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true;
+        rightView?.translatesAutoresizingMaskIntoConstraints = false;
+
+            //bottom
+        bottomView?.anchor(top: topView?.bottomAnchor, bottom: view.bottomAnchor, leading: rightView?.trailingAnchor, trailing: rightView?.leadingAnchor);
+        bottomView?.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.60).isActive = true;
+        bottomView?.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.50).isActive = true;
+        bottomView?.translatesAutoresizingMaskIntoConstraints = false;
+        
     }
 
     //top
